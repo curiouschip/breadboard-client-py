@@ -4,14 +4,14 @@ from sliplib import SlipStream
 from serial import Serial
 from serial.tools import list_ports
 
-PIN_MODE_HI_Z				= 0
-PIN_MODE_INPUT				= 1
-PIN_MODE_INPUT_PULLUP		= 2
-PIN_MODE_INPUT_PULLDOWN		= 3
-PIN_MODE_OUTPUT				= 4
+PIN_MODE_HI_Z               = 0
+PIN_MODE_INPUT              = 1
+PIN_MODE_INPUT_PULLUP       = 2
+PIN_MODE_INPUT_PULLDOWN     = 3
+PIN_MODE_OUTPUT             = 4
 
-REVERSE 					= 0
-FORWARD						= 1
+REVERSE                     = 0
+FORWARD                     = 1
 
 class BreadboardNotFound(Exception):
     pass
@@ -74,10 +74,10 @@ def waitForBreadboard():
             time.sleep(1)
         
 class Breadboard():
-    DEVICE_ID_RESPONSE 	= bytes([0x01, 0x77, 0x3E, 0xE2, 0xF0, 0x6A, 0x19, 0x44])
+    DEVICE_ID_RESPONSE  = bytes([0x01, 0x77, 0x3E, 0xE2, 0xF0, 0x6A, 0x19, 0x44])
 
-    POTENTIOMETER		= 24
-    BUTTON 				= 25
+    POTENTIOMETER       = 24
+    BUTTON              = 25
 
     CMD_DEVICE						= 0x00
     CMD_SIMPLE_IO					= 0x01
@@ -85,34 +85,34 @@ class Breadboard():
 
     OP_RESET			= 0x00
 
-    OP_DELAY_MS			= 0x10
-    OP_DELAY_US			= 0x11
+    OP_DELAY_MS         = 0x10
+    OP_DELAY_US         = 0x11
     
-    OP_SET_PIN_MODE		= 0x20
-    OP_DIGITAL_READ		= 0x21
-    OP_DIGITAL_WRITE	= 0x22
-    OP_DIGITAL_WAIT		= 0x23
+    OP_SET_PIN_MODE     = 0x20
+    OP_DIGITAL_READ     = 0x21
+    OP_DIGITAL_WRITE    = 0x22
+    OP_DIGITAL_WAIT     = 0x23
 
-    OP_SCANNER_ENABLE	= 0x30
-    OP_SCANNER_READ		= 0x31
-    OP_SCANNER_DISABLE	= 0x32
+    OP_SCANNER_ENABLE   = 0x30
+    OP_SCANNER_READ     = 0x31
+    OP_SCANNER_DISABLE  = 0x32
 
-    OP_PWM_SET_DUTY		= 0x42
+    OP_PWM_SET_DUTY     = 0x42
 
-    OP_ANALOG_READ		= 0x52
+    OP_ANALOG_READ      = 0x52
 
-    OP_MOTOR_SET		= 0x60
+    OP_MOTOR_SET        = 0x60
 
-    OP_LED_SET			= 0x71
-    OP_LED_TOGGLE		= 0x72
+    OP_LED_SET          = 0x71
+    OP_LED_TOGGLE       = 0x72
 
-    OP_SPI_ENABLE		= 0x80
-    OP_SPI_CONFIGURE	= 0x81
-    OP_SPI_WRITE		= 0x82
-    OP_SPI_READ			= 0x83
-    OP_SPI_DISABLE		= 0x8F
+    OP_SPI_ENABLE       = 0x80
+    OP_SPI_CONFIGURE    = 0x81
+    OP_SPI_WRITE        = 0x82
+    OP_SPI_READ         = 0x83
+    OP_SPI_DISABLE      = 0x8F
 
-    FLAG_CONTINUE		= 0x01
+    FLAG_CONTINUE       = 0x01
 
     def __init__(self, port_name):
         """Connect to a breadboard on the given serial port"""

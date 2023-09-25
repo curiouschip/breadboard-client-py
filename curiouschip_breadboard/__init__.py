@@ -16,7 +16,7 @@ FORWARD                     = 1
 BUITLIN_POTENTIOMETER       = 24
 BUILTIN_BUTTON              = 25
 
-OP_RESET			        = 0x00
+OP_RESET                    = 0x00
 
 OP_DELAY_MS                 = 0x10
 OP_DELAY_US                 = 0x11

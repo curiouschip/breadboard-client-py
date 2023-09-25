@@ -13,7 +13,7 @@ PIN_MODE_OUTPUT             = 4
 REVERSE                     = 0
 FORWARD                     = 1
 
-BUITLIN_POTENTIOMETER       = 24
+BUILTIN_POTENTIOMETER       = 24
 BUILTIN_BUTTON              = 25
 
 OP_RESET                    = 0x00
@@ -267,7 +267,7 @@ class Breadboard():
     # def digitalWait(self, pin, level, settle_us = 0, timeout_us = 0):
     # 	self.mustExec([ Op(OP_DIGITAL_WAIT, struct.pack(">BBLL", pin, level, settle_us, timeout_us)) ])
 
-    def createButton(self, pin, polarity = False, debounce_time = 0):
+    def createButton(self, pin, polarity = False, debounce_time = 30):
         """Create a button
         
         Parameters
@@ -688,9 +688,9 @@ class Button:
     def __init__(self, breadboard, pin, polarity, debounce_time):
         self.bb = breadboard
         self.pin = pin
-        self.bb.scanEnable(self, pin, polarity, debounce_time)
+        self.bb.scanEnable(pin, polarity, debounce_time)
     
-    def query(self):
+    def read(self):
         return self.bb.getScanState(self.pin)
 
 #
@@ -712,7 +712,7 @@ def opDigitalWrite(pin, level):
     return Op(OP_DIGITAL_WRITE, struct.pack("BB", pin, level))
 
 def opScanEnable(pin, polarity, debounce_time):
-    return Op(OP_SCANNER_ENABLE, struct.pack("B", pin))
+    return Op(OP_SCANNER_ENABLE, struct.pack(">BBL", pin, polarity, debounce_time))
 
 def opScanDisable(pin):
     return Op(OP_SCANNER_DISABLE, struct.pack("B", pin))

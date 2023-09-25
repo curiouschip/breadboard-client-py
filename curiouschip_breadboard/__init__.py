@@ -137,10 +137,22 @@ class Breadboard():
         self.__cmd_buffer = bytearray(1024)
         self.__readDeviceInfo()
     
-    #
-    #
-
     def exec(self, ops, continue_on_error = False):
+        """Execute the given operations and return the results.
+        
+        Parameters
+        ----------
+        ops
+            List of operations
+        continue_on_error: bool
+            Set to True if the breadboard should continue processing
+            successive operations when an operation fails.
+        
+        Returns
+        -------
+        results
+            List of results, one per operation
+        """
         self.__cmd_buffer[0] = self.CMD_SIMPLE_IO
         
         flags = 0
@@ -172,6 +184,28 @@ class Breadboard():
         return results
     
     def mustExec(self, ops, continue_on_error = False):
+        """Execute the given operations and return the results,
+        raising an exception if any of the return results indicate
+        failure.
+
+        Parameters
+        ----------
+        ops
+            List of operations
+        continue_on_error: bool
+            Set to True if the breadboard should continue processing
+            successive operations when an operation fails.
+        
+        Returns
+        -------
+        results
+            List of results, one per operation
+        
+        Raises
+        ------
+        OperationFailed
+            If any of the operations failed
+        """
         results = self.exec(ops, continue_on_error)
         for r in results:
             r.raiseIfError()

@@ -13,6 +13,9 @@ PIN_MODE_OUTPUT             = 4
 REVERSE                     = 0
 FORWARD                     = 1
 
+BUITLIN_POTENTIOMETER       = 24
+BUILTIN_BUTTON              = 25
+
 class BreadboardNotFound(Exception):
     pass
 
@@ -75,9 +78,6 @@ def waitForBreadboard():
         
 class Breadboard():
     DEVICE_ID_RESPONSE  = bytes([0x01, 0x77, 0x3E, 0xE2, 0xF0, 0x6A, 0x19, 0x44])
-
-    POTENTIOMETER       = 24
-    BUTTON              = 25
 
     CMD_DEVICE						= 0x00
     CMD_SIMPLE_IO					= 0x01
@@ -479,7 +479,7 @@ class Breadboard():
             A generator that yields each character as it is read
         """
         if pin is None:
-            pin = self.BUTTON
+            pin = BUILTIN_BUTTON
         self.__command(struct.pack(">BBLLLL", self.CMD_START_MORSE_CODE_DECODER, pin, min_press_time, dash_press_threshold, inter_character_time, inter_word_time))
         while True:
             yield self.port.read().decode('utf-8')

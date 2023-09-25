@@ -31,6 +31,11 @@ class CommandFailed(Exception):
         self.status = status
         self.body = body
 
+class OperationFailed(Exception):
+    def __init__(self, status, body):
+        self.status = status
+        self.body = body
+
 def parseTLV(blob, callback):
     while len(blob) > 0:
         if len(blob) < 2:
@@ -155,11 +160,11 @@ class Breadboard():
         rp = 0
         while rp < len(result):
             if len(result) < 3:
-                raise Exception("blaaaa")
+                raise InvalidResponse("expected operation result to be at least 3 bytes")
             status = result[rp]
             payload_len = (result[rp+1] << 8) | result[rp+2]
             if len(result) < (3 + payload_len):
-                raise Exception("bllaalalal")
+                raise InvalidResponse("reported operation result length overruns actual length")
             rp += 3
             results.append(OpResult(status, result[rp:rp+payload_len]))
             rp += payload_len
@@ -502,8 +507,10 @@ class Breadboard():
     def __command(self, cmd):
         self.__send(cmd)
         response = self.__recv()
-        if len(response) < 2 or response[0] != (cmd[0] | 0x80):
-            raise InvalidResponse()
+        if len(response) < 2:
+            raise InvalidResponse("expected response to be at least 2 bytes")
+        elif response[0] != (cmd[0] | 0x80):
+            raise InvalidResponse("response type does not match expected")
         if response[1] != 0:
             raise CommandFailed(cmd[0], response[1], response[2:])
         return response[2:]
@@ -552,7 +559,7 @@ class OpResult:
     
     def raiseIfError(self):
         if self.status != 0:
-            raise Exception("boom")
+            raise OperationFailed(self.status, self.body)
 
 class SPIDevice:
     """A SPIDevice represents a device on the SPI bus plus all of

@@ -17,5 +17,10 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+dependencies = [
+    'pyserial >= 3',
+    'sliplib ~= 0.6'
+]
+
 [project.urls]
 "Homepage" = "https://github.com/curiouschip/breadboard-client-py"

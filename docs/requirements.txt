@@ -1,2 +1,3 @@
 sliplib
 pyserial
+sphinx_rtd_theme
